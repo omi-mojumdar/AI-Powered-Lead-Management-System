@@ -1,0 +1,516 @@
+{
+  "name": "AI-Powered Lead Management System",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "d9b3be5c-8074-4411-9b64-ed166f5e8ca1",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        -64
+      ],
+      "id": "ffc540c6-6d41-47e2-bab2-fd634e398520",
+      "name": "Webhook",
+      "webhookId": "d9b3be5c-8074-4411-9b64-ed166f5e8ca1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "951ea915-8b6f-4b69-82af-d7e6140dfc01",
+              "name": "Full Name",
+              "value": "={{ $json.body.name }}",
+              "type": "string"
+            },
+            {
+              "id": "9bc12226-da92-4578-8f92-4a03b9e3237f",
+              "name": "Email",
+              "value": "={{ $json.body.email }}",
+              "type": "string"
+            },
+            {
+              "id": "e967b593-e2ed-4121-bbf1-496e123438d0",
+              "name": "Phone",
+              "value": "={{ $json.body.phone }}",
+              "type": "string"
+            },
+            {
+              "id": "61eebfa7-3769-475a-a08e-7708ad373429",
+              "name": "Message",
+              "value": "={{ $json.body.message }}",
+              "type": "string"
+            },
+            {
+              "id": "ae88115f-2ad1-439f-8c9c-b2c6c501d921",
+              "name": "SubmittedAt",
+              "value": "={{ $json.body.submittedAt }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        -64
+      ],
+      "id": "84f553db-7413-46a0-8a7c-3839f74eed58",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Append Row').item.json.Email }}",
+        "subject": "We've Received Your Message",
+        "message": "=<!DOCTYPE html>\n<html>\n<head><meta charset=\"UTF-8\"></head>\n<body style=\"margin:0;padding:0;background-color:#eef2ff;font-family:'Segoe UI',Arial,sans-serif;\">\n\n<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\"\nstyle=\"background-color:#eef2ff;padding:40px 20px;\">\n<tr><td align=\"center\">\n\n<table width=\"600\" cellpadding=\"0\" cellspacing=\"0\"\nstyle=\"background:#ffffff;border-radius:16px;overflow:hidden;\">\n\n  <!-- Top accent bar -->\n  <tr>\n    <td style=\"background:linear-gradient(90deg,#6366f1,#8b5cf6,#ec4899);\n    height:5px;\"></td>\n  </tr>\n\n  <!-- Header -->\n  <tr>\n    <td style=\"padding:50px 40px 30px;text-align:center;\">\n      <!-- Icon circle -->\n      <div style=\"width:70px;height:70px;background:#eef2ff;\n      border-radius:50%;margin:0 auto 20px;\n      display:flex;align-items:center;justify-content:center;\">\n        <span style=\"font-size:32px;\">✉️</span>\n      </div>\n      <h1 style=\"color:#111827;margin:0;font-size:28px;font-weight:700;\">\n        Thank You for Reaching Out!\n      </h1>\n      <p style=\"color:#6b7280;margin:12px 0 0;font-size:15px;line-height:1.6;\">\n        We have received your message and will get back to you soon.\n      </p>\n    </td>\n  </tr>\n\n  <!-- AI Reply Box -->\n  <tr>\n    <td style=\"padding:0 40px 30px;\">\n      <div style=\"background:#f5f3ff;border-left:4px solid #6366f1;\n      border-radius:0 12px 12px 0;padding:24px;\">\n        <p style=\"margin:0 0 8px;font-size:12px;color:#6366f1;\n        font-weight:700;text-transform:uppercase;letter-spacing:1px;\">\n          Message from our team\n        </p>\n        <p style=\"margin:0;font-size:15px;color:#374151;line-height:1.8;\">\n          {{ $json.content.parts[0].text }}\n        </p>\n      </div>\n    </td>\n  </tr>\n\n  <!-- Divider with text -->\n  <tr>\n    <td style=\"padding:0 40px 24px;\">\n      <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n        <tr>\n          <td style=\"border-top:1px solid #e5e7eb;\"></td>\n          <td style=\"padding:0 12px;white-space:nowrap;\n          font-size:12px;color:#9ca3af;\">\n            YOUR DETAILS\n          </td>\n          <td style=\"border-top:1px solid #e5e7eb;\"></td>\n        </tr>\n      </table>\n    </td>\n  </tr>\n\n  <!-- Details Cards -->\n  <tr>\n    <td style=\"padding:0 40px;\">\n      <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n\n        <!-- Name & Email row -->\n        <tr>\n          <td width=\"48%\" style=\"padding:0 4px 8px 0;\">\n            <div style=\"background:#f9fafb;border:1px solid #e5e7eb;\n            border-radius:10px;padding:14px 16px;\">\n              <p style=\"margin:0;font-size:11px;color:#9ca3af;\n              text-transform:uppercase;letter-spacing:0.5px;\">Name</p>\n              <p style=\"margin:6px 0 0;font-size:14px;\n              color:#111827;font-weight:600;\">\n                {{ $('Append Row').item.json.Name }}\n              </p>\n            </div>\n          </td>\n          <td width=\"4%\"></td>\n          <td width=\"48%\" style=\"padding:0 0 8px 4px;\">\n            <div style=\"background:#f9fafb;border:1px solid #e5e7eb;\n            border-radius:10px;padding:14px 16px;\">\n              <p style=\"margin:0;font-size:11px;color:#9ca3af;\n              text-transform:uppercase;letter-spacing:0.5px;\">Email</p>\n              <p style=\"margin:6px 0 0;font-size:14px;\n              color:#111827;font-weight:600;\">\n                {{ $('Append Row').item.json.Email }}\n              </p>\n            </div>\n          </td>\n        </tr>\n\n        <!-- Phone row -->\n        <tr>\n          <td colspan=\"3\" style=\"padding:0 0 8px;\">\n            <div style=\"background:#f9fafb;border:1px solid #e5e7eb;\n            border-radius:10px;padding:14px 16px;\">\n              <p style=\"margin:0;font-size:11px;color:#9ca3af;\n              text-transform:uppercase;letter-spacing:0.5px;\">Phone</p>\n              <p style=\"margin:6px 0 0;font-size:14px;\n              color:#111827;font-weight:600;\">\n                {{ $('Append Row').item.json.Phone }}\n              </p>\n            </div>\n          </td>\n        </tr>\n\n        <!-- Message row -->\n        <tr>\n          <td colspan=\"3\" style=\"padding:0 0 8px;\">\n            <div style=\"background:#f9fafb;border:1px solid #e5e7eb;\n            border-radius:10px;padding:14px 16px;\">\n              <p style=\"margin:0;font-size:11px;color:#9ca3af;\n              text-transform:uppercase;letter-spacing:0.5px;\">\n                Your Message\n              </p>\n              <p style=\"margin:6px 0 0;font-size:14px;\n              color:#374151;line-height:1.7;\">\n                {{ $('Append Row').item.json.Message }}\n              </p>\n            </div>\n          </td>\n        </tr>\n\n      </table>\n    </td>\n  </tr>\n\n  <!-- CTA Button -->\n  <tr>\n    <td style=\"padding:32px 40px;text-align:center;\">\n      <a href=\"https://id-preview--aa073d37-f065-4280-afe2-8be902968fd5.lovable.app/#services\"\n      style=\"background:linear-gradient(135deg,#6366f1,#8b5cf6);\n      color:#ffffff;text-decoration:none;padding:15px 40px;\n      border-radius:50px;font-weight:700;font-size:15px;\n      display:inline-block;letter-spacing:0.3px;\">\n        Our Services →\n      </a>\n    </td>\n  </tr>\n\n  <!-- Footer -->\n  <tr>\n    <td style=\"background:#f9fafb;padding:24px 40px;\n    text-align:center;border-top:1px solid #e5e7eb;\">\n      <p style=\"margin:0;font-size:13px;color:#9ca3af;\">\n        © 2026 Lonewolf. All rights reserved.\n      </p>\n      <p style=\"margin:8px 0 0;font-size:12px;color:#d1d5db;\">\n        This is an automated response. Please do not reply to this email.\n      </p>\n    </td>\n  </tr>\n\n  <!-- Bottom accent bar -->\n  <tr>\n    <td style=\"background:linear-gradient(90deg,#6366f1,#8b5cf6,#ec4899);\n    height:4px;\"></td>\n  </tr>\n\n</table>\n</td></tr>\n</table>\n</body>\n</html>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1920,
+        32
+      ],
+      "id": "62c00b6a-31aa-4957-8a8d-8917abb61e70",
+      "name": "Gmail Autoreply",
+      "webhookId": "12bef165-27ba-4235-ad41-0ecf5dadb665",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "tUDK5cFDAcabWshC",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const email = $json.Email;\nconst phone = $json.Phone;\n\n// Email validation\nconst emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;\n\n// Phone validation (exactly 11 digits)\nconst phoneRegex = /^\\d{11}$/;\n\nif (!emailRegex.test(email)) {\n  throw new Error('Invalid email address');\n}\n\nif (!phoneRegex.test(phone)) {\n  throw new Error('Phone number must contain exactly 11 digits');\n}\n\nreturn [{\n  json: {\n    ...$json,\n    validation: \"passed\"\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        -64
+      ],
+      "id": "6e0b8b4f-a59c-41f2-819d-5f373b5329d0",
+      "name": "Validation"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C0B8NSU0DB5",
+          "mode": "list",
+          "cachedResultName": "new-channel"
+        },
+        "text": "=🚀 *New Lead Received*\n\n👤 *Name:* {{ $('Append Row').item.json.Name }}\n\n📧 *Email:* {{ $('Append Row').item.json.Email }}\n\n📱 *Phone:* {{ $('Append Row').item.json.Phone }}\n\n💬 *Message:* {{ $('Append Row').item.json.Message }}\n\n  *Lead Score:* {{ $('Append Row').item.json['Lead Score'] }}\n\n\n🕒 *Submitted:* {{ $('Append Row').item.json.SubmittedAt }}\n\n",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.5,
+      "position": [
+        2144,
+        32
+      ],
+      "id": "4b0b0fc3-e4f4-4d6b-8ee4-9d81ac6cd538",
+      "name": "Send a message",
+      "webhookId": "728c2ac7-9ee6-4021-a610-6b96b1ed4c45",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "gTcrvRVOzV0cufPq",
+          "name": "Slack OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1QvgM6jmyO6Zgz-XZOWOfGhOj3mv8LFICQR2s32UcmGw",
+          "mode": "list",
+          "cachedResultName": "n8n practice file",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QvgM6jmyO6Zgz-XZOWOfGhOj3mv8LFICQR2s32UcmGw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1101422482,
+          "mode": "list",
+          "cachedResultName": "Lead Generation",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QvgM6jmyO6Zgz-XZOWOfGhOj3mv8LFICQR2s32UcmGw/edit#gid=1101422482"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Email",
+              "lookupValue": "={{$json[\"Email\"]}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        672,
+        -64
+      ],
+      "id": "c5c4b33f-3e42-4868-8155-9f64bfacb725",
+      "name": "Get row(s) in sheet",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "fRZGbfXxZ77Dlhqj",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "0c75af55-fa8c-4cd5-9411-08073a9cf523",
+              "leftValue": "={{ $json.row_number }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        896,
+        -64
+      ],
+      "id": "29d6a9e5-5d0f-4449-a2cd-a53f12c2d2e3",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C0B8NSU0DB5",
+          "mode": "list",
+          "cachedResultName": "new-channel"
+        },
+        "text": "=⚠️ Duplicate Lead Detected\n\nEmail: {{ $('Edit Fields').item.json.Email }}\n\nThis lead already exists in Google Sheets.",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.5,
+      "position": [
+        1120,
+        -160
+      ],
+      "id": "4dc2d259-8de9-4fc8-b86c-272e2a701105",
+      "name": "Send a message1",
+      "webhookId": "3ff8d6b4-d142-4546-9d0a-253dbc266b24",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "gTcrvRVOzV0cufPq",
+          "name": "Slack OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1QvgM6jmyO6Zgz-XZOWOfGhOj3mv8LFICQR2s32UcmGw",
+          "mode": "list",
+          "cachedResultName": "n8n practice file",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QvgM6jmyO6Zgz-XZOWOfGhOj3mv8LFICQR2s32UcmGw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1101422482,
+          "mode": "list",
+          "cachedResultName": "Lead Generation",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1QvgM6jmyO6Zgz-XZOWOfGhOj3mv8LFICQR2s32UcmGw/edit#gid=1101422482"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $('Validation').item.json['Full Name'] }}",
+            "Email": "={{ $('Validation').item.json.Email }}",
+            "Phone": "={{ $('Validation').item.json.Phone }}",
+            "Message": "={{ $('Validation').item.json.Message }}",
+            "SubmittedAt": "={{ $('Validation').item.json.SubmittedAt }}",
+            "Lead Score": "={{ $json.leadScore }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Phone",
+              "displayName": "Phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Message",
+              "displayName": "Message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Lead Score",
+              "displayName": "Lead Score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "SubmittedAt",
+              "displayName": "SubmittedAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1344,
+        32
+      ],
+      "id": "84c1b676-31db-4ff6-9b11-ee412893b044",
+      "name": "Append Row",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "fRZGbfXxZ77Dlhqj",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $('Edit Fields').first().json;\nconst message = (\n  input[\"Message\"] || \n  input[\"message\"] || \n  \"\"\n).toLowerCase();\n\nlet leadScore = \"Cold\";\n\nif (\n  message.includes(\"price\") ||\n  message.includes(\"pricing\") ||\n  message.includes(\"quote\") ||\n  message.includes(\"buy\") ||\n  message.includes(\"purchase\")\n) {\n  leadScore = \"Hot\";\n}\nelse if (\n  message.includes(\"interested\") ||\n  message.includes(\"service\") ||\n  message.includes(\"information\") ||\n  message.includes(\"details\") ||\n  message.includes(\"learn\") ||\n  message.includes(\"know more\")\n) {\n  leadScore = \"Warm\";\n}\n\nreturn [{\n  json: {\n    \"Full Name\": input[\"Full Name\"],\n    \"Email\": input[\"Email\"],\n    \"Phone\": input[\"Phone\"],\n    \"Message\": input[\"Message\"],\n    \"SubmittedAt\": input[\"SubmittedAt\"],\n    \"leadScore\": leadScore\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        32
+      ],
+      "id": "5173edf8-f5e3-40e1-931a-8094cde87d80",
+      "name": "Lead Scoring"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "models/gemini-3-flash-preview"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Write a personalized reply for this lead:\n\nLead Name: {{ $json.Name }}\nLead Score: {{ $json['Lead Score'] }}\nTheir Message: {{ $json.Message }}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {
+          "systemMessage": "You are a professional business email assistant for Omi Mojumdar.\nWrite warm, short, personalized email replies under 150 words.\nDo not include a subject line.\nAlways sign off with \"Best regards, Omi Mojumdar\"\nWrite plain text only, no HTML tags."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        1568,
+        32
+      ],
+      "id": "cab7aceb-19a3-47f4-8a59-5d98b7d2f5ae",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "LTCE9dGLOkct8bHI",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Validation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validation": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail Autoreply": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Lead Scoring",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append Row": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lead Scoring": {
+      "main": [
+        [
+          {
+            "node": "Append Row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Gmail Autoreply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "b53467a8-e357-4faf-9cd7-6a59711179ea",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ae79bea9e6ab0c92c093ac67ad2bc831ecd6621b882b9228d8a0111c608c536a"
+  },
+  "nodeGroups": [],
+  "id": "98BVzyaOquHVX6Ud",
+  "tags": []
+}
